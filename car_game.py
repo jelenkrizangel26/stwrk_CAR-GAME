@@ -46,7 +46,7 @@ def car(x,y):
 
 def text_objects(text,font):
     textSurface = font.render(text, True, black)
-    return textSurface, textSurface.get_rext()
+    return textSurface, textSurface.get_rect()
 
 def crash():
     pygame.mixer.Sound.play(crash_sound)
@@ -98,13 +98,63 @@ def paused():
     gameDisplay.blit(TextSurf,TextRect)
 
     while pause:
-        for event in pygame.event.get()
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
 
         button("Continue",150,450,100,50,green,bright_green,unpause)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
 
-        pygame.sisplay.update()
+        pygame.display.update()
         clock.tick(15)
+
+def game_intro():
+
+    intro = True
+
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(white)
+        largeText= pygame.font.SysFont("comicsansms",115)
+        TextSurf, TextRect = text_objects("Race and Dash", largeText)
+        TextRect.center = ((display_width/2),(display_height/2))
+        gameDisplay.blit(TextSurf,TextRect)
+
+        button("GO!",150,450,100,5,green,bright_green,game_loop)
+        button("Quit",550,450,100,50,red,bright_red,quitgame)
+
+        pygame.display.update()
+        clock.tick(15)
+
+def game_loop():
+    global pause
+    pygame.mixer.music.load('Assignment4\stwrk_CAR-GAME\jazz.wav')
+    pygame.mixer.music.play(-1)
+
+    x = (display_width * 0.45)
+    y = (display_height * 0.8)
+
+    x_change = 0
+
+    thing_startx = random.randrange(0, display_width)
+    thing_starty = -600
+    thing_speed = 4
+    thing_width = 100
+    thign_height = 100
+
+    thingCount = 1
+
+    dodged = 0
+
+    gameExit = False
+
+
+game_intro()
+game_loop()
+pygame.quit()
+quit()
