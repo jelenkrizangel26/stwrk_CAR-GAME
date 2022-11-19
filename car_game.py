@@ -4,7 +4,9 @@ import random
 
 pygame.init()
 
+
 crash_sound = pygame.mixer.Sound("Assignment4\stwrk_CAR-GAME\\crash.wav")
+
 
 display_width = 800
 display_height = 600
@@ -33,6 +35,7 @@ pygame.display.set_icon(gameIcon)
 
 pause = False
 
+
 def things_dodged(count):
     font = pygame.font.SysFont("comicsansms", 25)
     text = font.render("Dodged: "+str(count), True, black)
@@ -48,18 +51,25 @@ def text_objects(text,font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
 
+
 def crash():
+
     pygame.mixer.Sound.play(crash_sound)
     pygame.mixer.music.stop()
+
     largeText = pygame.font.SysFont("comicsansms",115)
     TextSurf, TextRect = text_objects("Oh no! You Crashed (X_X)", largeText)
+    TextRect.center = ((display_width/2),(display_height/2))
     gameDisplay.blit(TextSurf, TextRect)
+
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.Quit:
                 pygame.quit()
                 quit()
+
+
 
         button("Play Again",150,450,100,50,green,bright_green,game_loop)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
@@ -75,11 +85,13 @@ def button(msg,x,y,w,h,ic,ac,action=None):
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
         if click[0] == 1 and action !=None:
             action()
-        else:
-            pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
-        smallText = pygame.font.SysFont("comicsansms",20)
-        textSurf, textRect =( (x+(w/2)), (y+(h/2)) )
-        gameDisplay.blit(textSurf, textRect)
+    else:
+        pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
+    smallText = pygame.font.SysFont("comicsansms",20)
+    textSurf, textRect = text_objects(msg,smallText)
+    textRect.center = ( (x+(w/2)), (y+(h/2)) )
+    gameDisplay.blit(textSurf, textRect)
+
 
 def quitgame():
     pygame.quit()
@@ -90,12 +102,16 @@ def unpause():
     pygame.mixer.music.unpause()
     pause = False
 
+
 def paused():
+
     pygame.mixer.music.pause()
+
     largeText = pygame.font.SysFont("comicsansms",115)
     TextSurf, TextRect = text_objects("Paused", largeText)
     TextRect.center = ((display_width/2),(display_height/2))
     gameDisplay.blit(TextSurf,TextRect)
+
 
     while pause:
         for event in pygame.event.get():
@@ -103,11 +119,13 @@ def paused():
                 pygame.quit()
                 quit()
 
+
         button("Continue",150,450,100,50,green,bright_green,unpause)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
 
         pygame.display.update()
         clock.tick(15)
+
 
 def game_intro():
 
@@ -115,6 +133,7 @@ def game_intro():
 
     while intro:
         for event in pygame.event.get():
+            
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -125,14 +144,20 @@ def game_intro():
         TextRect.center = ((display_width/2),(display_height/2))
         gameDisplay.blit(TextSurf,TextRect)
 
-        button("GO!",150,450,100,5,green,bright_green,game_loop)
+        button("GO!",150,450,100,50,green,bright_green,game_loop)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
 
         pygame.display.update()
         clock.tick(15)
 
+
+
+
+
+
 def game_loop():
     global pause
+
     pygame.mixer.music.load('Assignment4\stwrk_CAR-GAME\jazz.wav')
     pygame.mixer.music.play(-1)
 
@@ -156,7 +181,7 @@ def game_loop():
     while not gameExit:
 
         for event in pygame.event.get():
-            if event.type == pygame.event.QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
@@ -169,43 +194,41 @@ def game_loop():
                     pause = True
                     paused()
 
+
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                         x_change = 0
 
-            x += x_change
-            gameDisplay.fill(white)
+        x += x_change
+        gameDisplay.fill(white)
 
-            things(thing_startx, thing_starty, thing_width, thign_height, block_color)
+        things(thing_startx, thing_starty, thing_width, thign_height, block_color)
 
 
 
-            thing_starty += thing_speed
-            car(x,y)
-            things_dodged(dodged)
+        thing_starty += thing_speed
+        car(x,y)
+        things_dodged(dodged)
 
-            if x > display_width - car_width or x < 0:
+        if x > display_width - car_width or x < 0:
                 crash()
 
-            if thing_starty > display_height:
-                thing_starty = 0 - thign_height
-                thing_startx = random.randrange(0,display_width)
-                dodged += 1
-                thing_speed += 1
-                thing_wigth += (dodged * 1.2)
+        if thing_starty > display_height:
+            thing_starty = 0 - thign_height
+            thing_startx = random.randrange(0,display_width)
+            dodged += 1
+            thing_speed += 1
+            thing_width += (dodged * 1.2)
 
-            if y < thing_starty+thign_height:
-                print('y crosse=over')
+        if y < thing_starty+thign_height:
+            print('y crosse=over')
 
-                if x > thing_startx and x < thing_startx + thing_width or x+car_width > thing_startx and x + car_width < thing_startx+thing_width:
-                    print('x crossover')
-                    crash()
+            if x > thing_startx and x < thing_startx + thing_width or x+car_width > thing_startx and x + car_width < thing_startx+thing_width:
+                print('x crossover')
+                crash()
 
-            pygame.display.update()
-            clock.tick(60)
-
-
-
+        pygame.display.update()
+        clock.tick(60)
 
 game_intro()
 game_loop()
