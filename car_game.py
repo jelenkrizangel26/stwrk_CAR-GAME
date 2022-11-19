@@ -1,3 +1,7 @@
+#Special Credits to "HACKs ANONS" for the amazing tutrorial!
+#Youtube link = https://www.youtube.com/watch?v=QfFltcghAv4
+# This prgram is a Car game where you will need to use the left and right button of your keyboard instead of the mouse.
+
 import pygame
 import time
 import random
@@ -57,15 +61,15 @@ def crash():
     pygame.mixer.Sound.play(crash_sound)
     pygame.mixer.music.stop()
 
-    largeText = pygame.font.SysFont("comicsansms",115)
-    TextSurf, TextRect = text_objects("Oh no! You Crashed (X_X)", largeText)
+    largeText = pygame.font.SysFont("comicsansms",85)
+    TextSurf, TextRect = text_objects("You Crashed (X_X)", largeText)
     TextRect.center = ((display_width/2),(display_height/2))
     gameDisplay.blit(TextSurf, TextRect)
 
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.Quit:
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
