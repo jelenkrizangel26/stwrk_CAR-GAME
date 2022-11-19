@@ -25,3 +25,10 @@ car_width = 73
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Race and Dashed')
 clock = pygame.time.Clock()
+
+carImg = pygame.image.load('Assignment4\stwrk_CAR-GAME\\racecar.png')
+gameIcon = pygame.image.load('Assignment4\stwrk_CAR-GAME\\carIcon.png')
+
+pygame.display.set_icon(gameIcon)
+
+pause = False
