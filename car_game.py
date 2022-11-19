@@ -38,3 +38,21 @@ def things_dodged(count):
     text = font.render("Dodged: "+str(count), True, black)
     gameDisplay.blit(text,(0,0))
 
+def things(thingx, thingy, thingw, thingh, color):
+    pygame.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
+
+def car(x,y):
+    gameDisplay.blit(carImg,(x,y))
+
+def text_objects(text,font):
+    textSurface = font.render(text, True, black)
+    return textSurface, textSurface.get_rext()
+
+def crash():
+    pygame.mixer.Sound.play(crash_sound)
+    pygame.mixer.music.stop()
+    largeText = pygame.font.SysFont("comicsansms",115)
+    TextSurf, TextRect = text_objects("Oh no! You Crashed (X_X)", largeText)
+    gameDisplay.blit(TextSurf, TextRect)
+
+    
