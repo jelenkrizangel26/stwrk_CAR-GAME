@@ -32,3 +32,9 @@ gameIcon = pygame.image.load('Assignment4\stwrk_CAR-GAME\\carIcon.png')
 pygame.display.set_icon(gameIcon)
 
 pause = False
+
+def things_dodged(count):
+    font = pygame.font.SysFont("comicsansms", 25)
+    text = font.render("Dodged: "+str(count), True, black)
+    gameDisplay.blit(text,(0,0))
+
