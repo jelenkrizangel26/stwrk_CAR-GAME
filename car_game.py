@@ -84,3 +84,27 @@ def button(msg,x,y,w,h,ic,ac,action=None):
 def quitgame():
     pygame.quit()
     quit()
+
+def unpause():
+    global pause
+    pygame.mixer.music.unpause()
+    pause = False
+
+def paused():
+    pygame.mixer.music.pause()
+    largeText = pygame.font.SysFont("comicsansms",115)
+    TextSurf, TextRect = text_objects("Paused", largeText)
+    TextRect.center = ((display_width/2),(display_height/2))
+    gameDisplay.blit(TextSurf,TextRect)
+
+    while pause:
+        for event in pygame.event.get()
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+
+        button("Continue",150,450,100,50,green,bright_green,unpause)
+        button("Quit",550,450,100,50,red,bright_red,quitgame)
+
+        pygame.sisplay.update()
+        clock.tick(15)
